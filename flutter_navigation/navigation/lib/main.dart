@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:navigation/categories_screen.dart';
-import 'package:navigation/category_meals_screen.dart';
+import 'package:navigation/screens/categories_screen.dart';
+import 'package:navigation/screens/category_meals_screen.dart';
+import 'package:navigation/screens/meal_detail_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +34,16 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (ctx) => const CategoriesScreen(),
-        CategoryMealsScreen.routeName: (ctx) => const CategoryMealsScreen()
+        CategoryMealsScreen.routeName: (ctx) => const CategoryMealsScreen(),
+        MealDetailScreen.routeName: (ctx) => const MealDetailScreen(),
+      },
+      onGenerateRoute: (settings) {
+        print(settings.arguments);
+        return MaterialPageRoute(builder: (ctx) => const CategoriesScreen());
+      },
+      // Fallback sreen - just like 404 page on website
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(builder: (ctx) => CategoriesScreen());
       },
     );
   }
