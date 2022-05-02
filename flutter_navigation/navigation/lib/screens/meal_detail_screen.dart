@@ -3,7 +3,12 @@ import 'package:navigation/dummy_data.dart';
 
 class MealDetailScreen extends StatelessWidget {
   static const routeName = "/meal-detail";
-  const MealDetailScreen({Key? key}) : super(key: key);
+  final Function(String) toggleFav;
+  final Function(String) isFav;
+
+  const MealDetailScreen(
+      {Key? key, required this.toggleFav, required this.isFav})
+      : super(key: key);
 
   Widget buildSectionTitle(BuildContext context, String text) {
     return Container(
@@ -78,7 +83,7 @@ class MealDetailScreen extends StatelessWidget {
                       ListTile(
                           leading: CircleAvatar(child: Text('# ${i + 1}')),
                           title: Text(selectedMeal.steps[i])),
-                      Divider()
+                      const Divider()
                     ],
                   );
                 },
@@ -88,9 +93,7 @@ class MealDetailScreen extends StatelessWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.of(context).pop(mealId);
-            },
-            child: Icon(Icons.delete)));
+            onPressed: () => toggleFav(mealId),
+            child: Icon(isFav(mealId) ? Icons.star : Icons.star_border)));
   }
 }
